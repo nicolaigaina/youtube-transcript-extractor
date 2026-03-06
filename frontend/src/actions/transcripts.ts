@@ -90,28 +90,25 @@ export async function fetchTranscript(
 
     const formattedText = data.transcript.replace(/\s*>>\s*/g, "\n\n");
 
-    // Fetch title/channel from backend response, or fallback to YouTube oEmbed
+    // Fetch video metadata from backend (calls YouTube oEmbed)
     let title = data.title ?? null;
     let channel = data.channel ?? null;
     if (!title) {
       try {
-        const oc = new AbortController();
-        const ot = setTimeout(() => oc.abort(), 5000);
-        const oembedRes = await fetch(
-          `https://www.youtube.com/oembed?url=${encodeURIComponent(`https://www.youtube.com/watch?v=${videoId}`)}&format=json`,
-          { signal: oc.signal, cache: "no-store" },
-        );
-        clearTimeout(ot);
-        if (oembedRes.ok) {
-          const oembed = (await oembedRes.json()) as { title?: string; author_name?: string };
-          title = oembed.title ?? null;
-          channel = oembed.author_name ?? null;
+        const metaRes = await fetch(`${env.BACKEND_URL}/api/metadata`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ video_id: videoId }),
+        });
+        if (metaRes.ok) {
+          const meta = (await metaRes.json()) as { title?: string; channel?: string };
+          title = meta.title ?? null;
+          channel = meta.channel ?? null;
         }
       } catch {
-        // oEmbed failed, continue without metadata
+        // Metadata fetch failed, continue without it
       }
     }
-    console.log(`[transcript] videoId=${videoId} title=${title} channel=${channel}`);
 
     if (existing && (needsTimestampUpgrade || needsMetadata)) {
       await db.transcript.update({

@@ -9,6 +9,7 @@ from flask_cors import CORS
 
 from transcript_service import (
     fetch_transcript,
+    fetch_video_metadata,
     TranscriptsDisabledError,
     VideoUnavailableError,
 )
@@ -69,6 +70,20 @@ def get_transcript():
     except Exception as e:
         log(f"Error fetching transcript for {video_id}: {e}", "ERROR")
         return jsonify({"has_transcript": False, "error": f"Failed to fetch transcript: {str(e)}"}), 500
+
+
+@app.route("/api/metadata", methods=["POST"])
+def get_metadata():
+    """Fetch video title and channel name."""
+    data = request.json
+    if not data or not data.get("video_id"):
+        return jsonify({"error": "Missing 'video_id' in request body"}), 400
+
+    video_id = data["video_id"]
+    log(f"Fetching metadata for {video_id}")
+    metadata = fetch_video_metadata(video_id)
+    log(f"Metadata result: title={metadata.get('title')}, channel={metadata.get('channel')}")
+    return jsonify(metadata), 200
 
 
 @app.route("/api/transcript/languages", methods=["POST"])

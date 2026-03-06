@@ -74,7 +74,7 @@ export function UrlInput() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             disabled={isLoading}
-            className="h-14 w-full rounded-2xl border-2 border-gray-200 bg-white px-5 pr-12 text-base text-gray-900 shadow-sm transition-all placeholder:text-gray-400 focus:border-red-400 focus:ring-4 focus:ring-red-100 focus:outline-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-red-500 dark:focus:ring-red-900/30"
+            className="h-14 w-full rounded-2xl border-2 border-gray-200 bg-white px-5 pr-12 text-base text-gray-900 shadow-sm transition-all placeholder:text-gray-400 focus:border-[#459F94] focus:ring-4 focus:ring-[#459F94]/10 focus:outline-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-[#459F94] dark:focus:ring-[#459F94]/20"
           />
           <button
             type="button"
@@ -89,7 +89,7 @@ export function UrlInput() {
         <button
           type="submit"
           disabled={isLoading}
-          className="flex h-14 cursor-pointer items-center gap-2 rounded-2xl bg-red-500 px-6 font-semibold text-white shadow-sm transition-all hover:bg-red-600 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50 sm:px-8"
+          className="flex h-14 cursor-pointer items-center gap-2 rounded-2xl bg-[#459F94] px-6 font-semibold text-white shadow-sm transition-all hover:bg-[#367d74] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50 sm:px-8"
         >
           {isLoading ? (
             <>
@@ -114,7 +114,7 @@ export function UrlInput() {
             checked={includeTimestamps}
             onChange={(e) => setIncludeTimestamps(e.target.checked)}
             disabled={isLoading}
-            className="h-4 w-4 cursor-pointer rounded border-gray-300 text-red-500 accent-red-500"
+            className="h-4 w-4 cursor-pointer rounded border-gray-300 text-[#459F94] accent-[#459F94]"
           />
           Include timestamps
         </label>

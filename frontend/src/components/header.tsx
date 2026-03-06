@@ -31,10 +31,13 @@ export function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <span className="text-xl font-bold tracking-tight sm:text-2xl">
-            <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#459F94] to-[#367d74] bg-clip-text text-transparent">
               YT
             </span>
-            <span className="text-gray-900 dark:text-white"> Transcript</span>
+            <span className="text-gray-900 dark:text-white">/</span>
+            <span className="bg-gradient-to-r from-[#EDB118] to-[#d9a515] bg-clip-text text-transparent">
+              Transcript
+            </span>
           </span>
         </Link>
 
@@ -42,13 +45,13 @@ export function Header() {
         <div className="hidden items-center gap-6 md:flex">
           <Link
             href="/"
-            className="text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300 dark:hover:text-red-400"
+            className="text-gray-700 transition-colors hover:text-[#459F94] dark:text-gray-300 dark:hover:text-[#459F94]"
           >
             Home
           </Link>
           <Link
             href="/history"
-            className="text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300 dark:hover:text-red-400"
+            className="text-gray-700 transition-colors hover:text-[#459F94] dark:text-gray-300 dark:hover:text-[#459F94]"
           >
             History
           </Link>
@@ -56,7 +59,7 @@ export function Header() {
             href="https://github.com/nicolaigaina/youtube-transcript-extractor"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300 dark:hover:text-red-400"
+            className="text-gray-700 transition-colors hover:text-[#459F94] dark:text-gray-300 dark:hover:text-[#459F94]"
           >
             GitHub
           </a>
@@ -91,9 +94,9 @@ export function Header() {
           {/* History button (desktop) */}
           <Link
             href="/history"
-            className="hidden cursor-pointer rounded-full bg-red-500 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600 md:inline-flex"
+            className="hidden cursor-pointer items-center gap-1.5 rounded-full bg-[#459F94] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-[#367d74] md:inline-flex"
           >
-            <History className="mr-2 h-4 w-4" />
+            <History className="h-4 w-4" />
             History
           </Link>
 
@@ -123,14 +126,14 @@ export function Header() {
             <Link
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300"
+              className="text-gray-700 transition-colors hover:text-[#459F94] dark:text-gray-300"
             >
               Home
             </Link>
             <Link
               href="/history"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300"
+              className="text-gray-700 transition-colors hover:text-[#459F94] dark:text-gray-300"
             >
               History
             </Link>
@@ -139,7 +142,7 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300"
+              className="flex items-center gap-2 text-gray-700 transition-colors hover:text-[#459F94] dark:text-gray-300"
             >
               <Github className="h-4 w-4" />
               GitHub

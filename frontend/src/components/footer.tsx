@@ -17,7 +17,7 @@ export function Footer() {
           <div className="md:col-span-2 lg:col-span-1">
             <Link href="/" className="mb-4 inline-block">
               <span className="text-2xl font-bold tracking-tight">
-                <span className="bg-gradient-to-r from-red-400 to-red-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#459F94] to-[#367d74] bg-clip-text text-transparent">
                   YT
                 </span>
                 <span className="text-white"> Transcript</span>
@@ -32,14 +32,14 @@ export function Footer() {
                 href="https://github.com/nicolaigaina/youtube-transcript-extractor"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-gray-800 p-3 transition-colors hover:bg-red-500"
+                className="rounded-full bg-gray-800 p-3 transition-colors hover:bg-[#459F94]"
                 aria-label="GitHub"
               >
                 <Github className="h-5 w-5" />
               </a>
               <a
                 href="mailto:admin@autoshorts.app"
-                className="rounded-full bg-gray-800 p-3 transition-colors hover:bg-red-500"
+                className="rounded-full bg-gray-800 p-3 transition-colors hover:bg-[#459F94]"
                 aria-label="Email"
               >
                 <Mail className="h-5 w-5" />
@@ -170,7 +170,7 @@ export function Footer() {
                   href="https://autoshorts.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-red-400 hover:underline"
+                  className="text-[#459F94] hover:underline"
                 >
                   AutoShorts
                 </a>

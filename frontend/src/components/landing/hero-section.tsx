@@ -16,13 +16,13 @@ export function HeroSection() {
       style={{ fontFamily: "var(--font-outfit)" }}
     >
       {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-red-50/50 via-white to-white dark:from-red-950/20 dark:via-black dark:to-black" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#459F94]/5 via-white to-white dark:from-[#459F94]/10 dark:via-black dark:to-black" />
 
       {/* Grid pattern */}
       <div
         className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ef4444' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23459F94' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }}
       />
 
@@ -31,9 +31,9 @@ export function HeroSection() {
         <div className="mx-auto max-w-4xl text-center">
           {/* Badge */}
           <div
-            className="animate-fade-up mb-6 inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-4 py-1.5 text-sm font-medium text-red-600 dark:border-red-800 dark:bg-red-950/50 dark:text-red-400"
+            className="animate-fade-up mb-6 inline-flex items-center gap-2 rounded-full border border-[#459F94]/30 bg-[#459F94]/10 px-4 py-1.5 text-sm font-medium text-[#459F94] dark:border-[#459F94]/40 dark:bg-[#459F94]/20"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#459F94]" />
             Free & Open Source
           </div>
 
@@ -42,7 +42,7 @@ export function HeroSection() {
             className="animate-fade-up mb-6 text-5xl leading-tight font-bold md:text-6xl lg:text-7xl"
             style={{ "--stagger": "0.1s" } as React.CSSProperties}
           >
-            <span className="bg-gradient-to-r from-red-500 via-red-600 to-red-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#459F94] via-[#EDB118] to-[#459F94] bg-clip-text text-transparent">
               YouTube Transcript
             </span>
             <br />
@@ -75,7 +75,7 @@ export function HeroSection() {
           >
             {trustIndicators.map((indicator, i) => (
               <div key={i} className="flex items-center gap-2">
-                <indicator.icon className="h-4 w-4 text-red-500" />
+                <indicator.icon className="h-4 w-4 text-[#459F94]" />
                 <span>{indicator.text}</span>
               </div>
             ))}
@@ -92,7 +92,7 @@ export function HeroSection() {
               { value: "0", label: "Cost - Always Free" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-2xl font-bold text-red-500 sm:text-3xl">
+                <div className="text-2xl font-bold text-[#459F94] sm:text-3xl">
                   {stat.value}
                 </div>
                 <div className="mt-1 text-xs text-gray-600 sm:text-sm dark:text-gray-400">

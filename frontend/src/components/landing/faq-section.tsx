@@ -55,7 +55,7 @@ export function FAQSection() {
         >
           <h2 className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl dark:text-white">
             Frequently Asked{" "}
-            <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#459F94] to-[#EDB118] bg-clip-text text-transparent">
               Questions
             </span>
           </h2>
@@ -86,7 +86,7 @@ export function FAQSection() {
                   {faq.question}
                 </h3>
                 <ChevronDown
-                  className={`h-5 w-5 flex-shrink-0 text-red-500 transition-transform ${
+                  className={`h-5 w-5 flex-shrink-0 text-[#459F94] transition-transform ${
                     openIndex === index ? "rotate-180" : ""
                   }`}
                 />

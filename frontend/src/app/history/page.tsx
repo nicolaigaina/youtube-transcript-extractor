@@ -15,7 +15,7 @@ export default async function HistoryPage() {
       <div className="mb-10">
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
           Transcript{" "}
-          <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#459F94] to-[#EDB118] bg-clip-text text-transparent">
             History
           </span>
         </h1>
@@ -28,8 +28,8 @@ export default async function HistoryPage() {
 
       {transcripts.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-6 rounded-2xl border border-dashed border-gray-300 py-20 text-center dark:border-gray-700">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50 dark:bg-red-950/50">
-            <FileText className="h-8 w-8 text-red-500" />
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#459F94]/10 dark:bg-[#459F94]/20">
+            <FileText className="h-8 w-8 text-[#459F94]" />
           </div>
           <div>
             <p className="text-lg font-medium text-gray-900 dark:text-white">
@@ -41,7 +41,7 @@ export default async function HistoryPage() {
           </div>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-full bg-red-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-red-600"
+            className="inline-flex items-center gap-2 rounded-full bg-[#459F94] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#367d74]"
           >
             Extract Transcript
             <ArrowRight className="h-4 w-4" />

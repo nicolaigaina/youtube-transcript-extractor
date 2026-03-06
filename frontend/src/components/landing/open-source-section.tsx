@@ -33,7 +33,7 @@ export function OpenSourceSection() {
               href="https://github.com/nicolaigaina/youtube-transcript-extractor"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 font-semibold text-white transition-colors hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700"
+              className="inline-flex items-center gap-2 rounded-full bg-[#459F94] px-6 py-3 font-semibold text-white transition-colors hover:bg-[#367d74]"
             >
               <Star className="h-4 w-4" />
               Star on GitHub

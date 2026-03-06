@@ -90,12 +90,31 @@ export async function fetchTranscript(
 
     const formattedText = data.transcript.replace(/\s*>>\s*/g, "\n\n");
 
+    // Fetch title/channel from backend response, or fallback to YouTube oEmbed
+    let title = data.title ?? null;
+    let channel = data.channel ?? null;
+    if (!title) {
+      try {
+        const oembedRes = await fetch(
+          `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
+          { signal: AbortSignal.timeout(5000) },
+        );
+        if (oembedRes.ok) {
+          const oembed = (await oembedRes.json()) as { title?: string; author_name?: string };
+          title = oembed.title ?? null;
+          channel = oembed.author_name ?? null;
+        }
+      } catch {
+        // oEmbed failed, continue without metadata
+      }
+    }
+
     if (existing && (needsTimestampUpgrade || needsMetadata)) {
       await db.transcript.update({
         where: { id: existing.id },
         data: {
-          ...(needsMetadata && data.title && { youtubeTitle: data.title }),
-          ...(needsMetadata && data.channel && { youtubeChannel: data.channel }),
+          ...(needsMetadata && title && { youtubeTitle: title }),
+          ...(needsMetadata && channel && { youtubeChannel: channel }),
           ...(needsTimestampUpgrade && data.segments && { segments: JSON.stringify(data.segments) }),
           ...(needsTimestampUpgrade && { hasTimestamps: !!data.segments?.length }),
           ...(data.all_transcripts && {
@@ -112,8 +131,8 @@ export async function fetchTranscript(
       data: {
         youtubeUrl,
         youtubeVideoId: videoId,
-        youtubeTitle: data.title ?? null,
-        youtubeChannel: data.channel ?? null,
+        youtubeTitle: title,
+        youtubeChannel: channel,
         transcriptText: formattedText,
         wordCount: data.word_count ?? 0,
         language: data.language,

@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { FileText } from "lucide-react";
-import { Badge } from "~/components/ui/badge";
+import { FileText, ArrowRight } from "lucide-react";
 
 interface TranscriptCardProps {
   transcript: {
@@ -18,42 +17,46 @@ export function TranscriptCard({ transcript }: TranscriptCardProps) {
   return (
     <Link
       href={`/transcripts/${transcript.id}`}
-      className="group flex gap-4 rounded-lg border bg-card p-3 transition-colors hover:bg-accent/50"
+      className="group flex gap-4 rounded-2xl border border-gray-200 bg-white p-4 transition-all hover:border-red-200 hover:shadow-md dark:border-gray-800 dark:bg-gray-900 dark:hover:border-red-900"
+      style={{ fontFamily: "var(--font-outfit)" }}
     >
+      {/* Thumbnail */}
       <img
         src={`https://img.youtube.com/vi/${transcript.youtubeVideoId}/mqdefault.jpg`}
         alt={transcript.youtubeTitle ?? "Video thumbnail"}
-        className="h-20 w-36 shrink-0 rounded-md object-cover"
+        className="h-20 w-36 shrink-0 rounded-xl object-cover"
       />
 
+      {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col justify-between py-0.5">
         <div>
-          <h3 className="truncate text-sm font-medium group-hover:text-primary">
+          <h3 className="truncate font-semibold text-gray-900 group-hover:text-red-500 dark:text-white dark:group-hover:text-red-400">
             {transcript.youtubeTitle ?? "Untitled Video"}
           </h3>
           {transcript.youtubeChannel && (
-            <p className="truncate text-xs text-muted-foreground">
+            <p className="truncate text-sm text-gray-500 dark:text-gray-400">
               {transcript.youtubeChannel}
             </p>
           )}
         </div>
 
         <div className="flex items-center gap-2">
-          <Badge variant="secondary" className="text-xs">
-            <FileText className="mr-1 h-3 w-3" />
+          <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-600 dark:bg-red-950/50 dark:text-red-400">
+            <FileText className="h-3 w-3" />
             {transcript.wordCount.toLocaleString()} words
-          </Badge>
+          </span>
           {transcript.language && (
-            <Badge variant="outline" className="text-xs">
+            <span className="rounded-full border border-gray-200 px-2.5 py-0.5 text-xs text-gray-500 dark:border-gray-700 dark:text-gray-400">
               {transcript.language}
-            </Badge>
+            </span>
           )}
-          <span className="ml-auto text-xs text-muted-foreground">
+          <span className="ml-auto text-xs text-gray-400">
             {transcript.createdAt.toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
             })}
           </span>
+          <ArrowRight className="h-4 w-4 text-gray-300 transition-transform group-hover:translate-x-1 group-hover:text-red-500 dark:text-gray-600" />
         </div>
       </div>
     </Link>

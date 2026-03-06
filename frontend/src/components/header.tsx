@@ -2,50 +2,149 @@
 
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { FileText, Github, Moon, Sun } from "lucide-react";
-import { Button } from "~/components/ui/button";
+import { useEffect, useState } from "react";
+import { Github, History, Menu, Moon, Sun, X } from "lucide-react";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
-          <FileText className="h-5 w-5 text-primary" />
-          <span className="hidden sm:inline">YouTube Transcript Extractor</span>
-          <span className="sm:hidden">YT Transcripts</span>
+    <header
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "border-b border-gray-200/50 bg-white/80 shadow-md backdrop-blur-lg dark:border-gray-800/50 dark:bg-black/80"
+          : "bg-white dark:bg-black"
+      }`}
+      style={{ fontFamily: "var(--font-outfit)" }}
+    >
+      <nav className="container mx-auto flex items-center justify-between px-6 py-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2">
+          <span className="text-xl font-bold tracking-tight sm:text-2xl">
+            <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+              YT
+            </span>
+            <span className="text-gray-900 dark:text-white"> Transcript</span>
+          </span>
         </Link>
 
-        <div className="flex items-center gap-1">
-          <Button variant="ghost" size="sm" render={<Link href="/history" />}>
+        {/* Desktop Navigation */}
+        <div className="hidden items-center gap-6 md:flex">
+          <Link
+            href="/"
+            className="text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300 dark:hover:text-red-400"
+          >
+            Home
+          </Link>
+          <Link
+            href="/history"
+            className="text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300 dark:hover:text-red-400"
+          >
             History
-          </Button>
+          </Link>
+          <a
+            href="https://github.com/nicolaigaina/youtube-transcript-extractor"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300 dark:hover:text-red-400"
+          >
+            GitHub
+          </a>
+        </div>
 
-          <Button
-            variant="ghost"
-            size="icon"
+        {/* Right side */}
+        <div className="flex items-center gap-2">
+          {/* Theme toggle */}
+          <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            aria-label="Toggle theme"
+            className="cursor-pointer rounded-full p-2 text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+            aria-label="Toggle dark mode"
           >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </Button>
+            {mounted && theme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
+          </button>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            render={
-              <a
-                href="https://github.com/nicolaigaina/youtube-transcript-extractor"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub repository"
-              />
-            }
+          {/* GitHub icon (desktop) */}
+          <a
+            href="https://github.com/nicolaigaina/youtube-transcript-extractor"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden cursor-pointer rounded-full p-2 text-gray-700 transition-colors hover:bg-gray-100 md:inline-flex dark:text-gray-300 dark:hover:bg-gray-800"
+            aria-label="GitHub repository"
           >
-            <Github className="h-4 w-4" />
-          </Button>
+            <Github className="h-5 w-5" />
+          </a>
+
+          {/* History button (desktop) */}
+          <Link
+            href="/history"
+            className="hidden cursor-pointer rounded-full bg-red-500 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600 md:inline-flex"
+          >
+            <History className="mr-2 h-4 w-4" />
+            History
+          </Link>
+
+          {/* Mobile menu toggle */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="cursor-pointer rounded-full p-2 text-gray-700 transition-colors hover:bg-gray-100 md:hidden dark:text-gray-300 dark:hover:bg-gray-800"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu */}
+      <div
+        className={`overflow-hidden transition-all duration-300 md:hidden ${
+          isMobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="border-t border-gray-200 bg-white/95 px-6 py-4 backdrop-blur-md dark:border-gray-700 dark:bg-black/95">
+          <div className="flex flex-col gap-3">
+            <Link
+              href="/"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300"
+            >
+              Home
+            </Link>
+            <Link
+              href="/history"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300"
+            >
+              History
+            </Link>
+            <a
+              href="https://github.com/nicolaigaina/youtube-transcript-extractor"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-2 text-gray-700 transition-colors hover:text-red-500 dark:text-gray-300"
+            >
+              <Github className="h-4 w-4" />
+              GitHub
+            </a>
+          </div>
         </div>
       </div>
     </header>

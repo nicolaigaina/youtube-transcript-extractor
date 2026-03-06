@@ -2,10 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ClipboardPaste, Loader2, FileText } from "lucide-react";
+import { ClipboardPaste, Loader2, FileText, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
 import { isValidYouTubeUrl } from "~/lib/validators";
 import { fetchTranscript } from "~/actions/transcripts";
 
@@ -34,7 +32,9 @@ export function UrlInput() {
     }
 
     if (!isValidYouTubeUrl(trimmed)) {
-      toast.error("Invalid YouTube URL. Please enter a valid YouTube video link.");
+      toast.error(
+        "Invalid YouTube URL. Please enter a valid YouTube video link.",
+      );
       return;
     }
 
@@ -60,49 +60,65 @@ export function UrlInput() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-xl space-y-4">
+    <form
+      onSubmit={handleSubmit}
+      className="mx-auto w-full max-w-2xl space-y-4"
+      style={{ fontFamily: "var(--font-outfit)" }}
+    >
+      {/* Input row */}
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <Input
+          <input
             type="url"
             placeholder="Paste a YouTube URL..."
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             disabled={isLoading}
-            className="pr-10"
+            className="h-14 w-full rounded-2xl border-2 border-gray-200 bg-white px-5 pr-12 text-base text-gray-900 shadow-sm transition-all placeholder:text-gray-400 focus:border-red-400 focus:ring-4 focus:ring-red-100 focus:outline-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-red-500 dark:focus:ring-red-900/30"
           />
           <button
             type="button"
             onClick={handlePaste}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400 transition-colors hover:text-gray-600 dark:hover:text-gray-300"
             aria-label="Paste from clipboard"
           >
-            <ClipboardPaste className="h-4 w-4" />
+            <ClipboardPaste className="h-5 w-5" />
           </button>
         </div>
 
-        <Button type="submit" disabled={isLoading}>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="flex h-14 cursor-pointer items-center gap-2 rounded-2xl bg-red-500 px-6 font-semibold text-white shadow-sm transition-all hover:bg-red-600 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50 sm:px-8"
+        >
           {isLoading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span className="hidden sm:inline">Extracting...</span>
+            </>
           ) : (
-            <FileText className="h-4 w-4" />
+            <>
+              <FileText className="h-5 w-5 sm:hidden" />
+              <span className="hidden sm:inline">Extract</span>
+              <ArrowRight className="hidden h-4 w-4 sm:block" />
+            </>
           )}
-          <span className="hidden sm:inline">
-            {isLoading ? "Extracting..." : "Extract"}
-          </span>
-        </Button>
+        </button>
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-muted-foreground">
-        <input
-          type="checkbox"
-          checked={includeTimestamps}
-          onChange={(e) => setIncludeTimestamps(e.target.checked)}
-          disabled={isLoading}
-          className="rounded border-input"
-        />
-        Include timestamps
-      </label>
+      {/* Timestamp toggle */}
+      <div className="flex items-center justify-center">
+        <label className="flex cursor-pointer items-center gap-2.5 text-sm text-gray-500 dark:text-gray-400">
+          <input
+            type="checkbox"
+            checked={includeTimestamps}
+            onChange={(e) => setIncludeTimestamps(e.target.checked)}
+            disabled={isLoading}
+            className="h-4 w-4 cursor-pointer rounded border-gray-300 text-red-500 accent-red-500"
+          />
+          Include timestamps
+        </label>
+      </div>
     </form>
   );
 }

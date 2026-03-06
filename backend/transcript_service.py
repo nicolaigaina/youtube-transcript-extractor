@@ -1,10 +1,27 @@
 """Core transcript extraction service using youtube-transcript-api."""
 
+import requests
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.proxies import GenericProxyConfig
 from youtube_transcript_api._errors import TranscriptsDisabled, VideoUnavailable
 
 from proxy_config import get_proxy_config
+
+
+def fetch_video_metadata(video_id: str) -> dict:
+    """Fetch video title and channel name via YouTube oEmbed (no API key required)."""
+    try:
+        resp = requests.get(
+            "https://www.youtube.com/oembed",
+            params={"url": f"https://www.youtube.com/watch?v={video_id}", "format": "json"},
+            timeout=5,
+        )
+        if resp.ok:
+            data = resp.json()
+            return {"title": data.get("title"), "channel": data.get("author_name")}
+    except Exception:
+        pass
+    return {"title": None, "channel": None}
 
 
 class TranscriptError(Exception):
@@ -78,11 +95,15 @@ def fetch_transcript(
         full_text = full_text.replace(" >> ", "\n\n")
         word_count = len(full_text.split())
 
+        metadata = fetch_video_metadata(video_id)
+
         response = {
             "has_transcript": True,
             "transcript": full_text,
             "word_count": word_count,
             "language": detected_language,
+            "title": metadata["title"],
+            "channel": metadata["channel"],
             "error": None,
         }
 

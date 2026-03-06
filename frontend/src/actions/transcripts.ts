@@ -53,6 +53,8 @@ export async function fetchTranscript(
       transcript?: string;
       word_count?: number;
       language?: string;
+      title?: string;
+      channel?: string;
       segments?: Array<{ text: string; start: number; duration: number }>;
       available_languages?: Array<{ code: string; name: string }>;
       all_transcripts?: Record<
@@ -106,6 +108,8 @@ export async function fetchTranscript(
       data: {
         youtubeUrl,
         youtubeVideoId: videoId,
+        youtubeTitle: data.title ?? null,
+        youtubeChannel: data.channel ?? null,
         transcriptText: formattedText,
         wordCount: data.word_count ?? 0,
         language: data.language,

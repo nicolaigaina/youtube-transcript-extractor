@@ -95,10 +95,13 @@ export async function fetchTranscript(
     let channel = data.channel ?? null;
     if (!title) {
       try {
+        const oc = new AbortController();
+        const ot = setTimeout(() => oc.abort(), 5000);
         const oembedRes = await fetch(
-          `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
-          { signal: AbortSignal.timeout(5000) },
+          `https://www.youtube.com/oembed?url=${encodeURIComponent(`https://www.youtube.com/watch?v=${videoId}`)}&format=json`,
+          { signal: oc.signal, cache: "no-store" },
         );
+        clearTimeout(ot);
         if (oembedRes.ok) {
           const oembed = (await oembedRes.json()) as { title?: string; author_name?: string };
           title = oembed.title ?? null;
@@ -108,6 +111,7 @@ export async function fetchTranscript(
         // oEmbed failed, continue without metadata
       }
     }
+    console.log(`[transcript] videoId=${videoId} title=${title} channel=${channel}`);
 
     if (existing && (needsTimestampUpgrade || needsMetadata)) {
       await db.transcript.update({

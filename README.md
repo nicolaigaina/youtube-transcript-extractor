@@ -9,6 +9,12 @@
 
 [Features](#features) | [Quick Start](#quick-start) | [API Docs](docs/API.md) | [Contributing](CONTRIBUTING.md)
 
+## Screenshots
+
+| Landing Page | Transcript History | Transcript Viewer |
+|:---:|:---:|:---:|
+| ![Landing](docs/screenshots/landing.png) | ![History](docs/screenshots/history.png) | ![Transcript](docs/screenshots/transcript.png) |
+
 ## Features
 
 - **Multi-Language Support** -- Automatically detects and extracts transcripts in 100+ languages

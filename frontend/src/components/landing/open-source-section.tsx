@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Star, GitFork, Heart } from "lucide-react";
+import { Github, Star, GitFork } from "lucide-react";
 import { useIntersectionObserver } from "~/hooks/use-intersection-observer";
 
 export function OpenSourceSection() {

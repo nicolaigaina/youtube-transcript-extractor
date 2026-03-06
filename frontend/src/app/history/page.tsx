@@ -3,6 +3,8 @@ import { FileText, ArrowRight } from "lucide-react";
 import { getTranscripts } from "~/actions/transcripts";
 import { TranscriptCard } from "~/components/transcript-card";
 
+export const dynamic = "force-dynamic";
+
 export default async function HistoryPage() {
   const { transcripts, total } = await getTranscripts();
 

@@ -20,7 +20,7 @@ export async function fetchTranscript(
   }
 
   // Deduplication: reuse existing transcript
-  const existing = await db.transcript.findUnique({
+  const existing = await db.transcript.findFirst({
     where: { youtubeVideoId: videoId },
   });
 

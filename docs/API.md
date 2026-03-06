@@ -155,11 +155,33 @@ List available transcript languages without fetching full content.
 
 ## Proxy Configuration
 
-For high-volume usage, configure Oxylabs residential proxy:
+YouTube actively blocks automated transcript requests from server IPs. When deploying to cloud infrastructure (AWS, GCP, Railway, Fly.io, etc.) or making frequent requests, you'll encounter `TranscriptsDisabled` errors, HTTP 429 rate limits, and IP bans -- even for videos that have captions enabled.
+
+**Solution:** Route requests through residential proxy IPs that YouTube treats as normal user traffic.
+
+### Setting Up Oxylabs Residential Proxy
+
+1. Sign up at [oxylabs.io/products/residential-proxy-pool](https://oxylabs.io/products/residential-proxy-pool)
+2. Choose the **Residential Proxy** product (datacenter proxies will be blocked by YouTube)
+3. Add your credentials to `.env`:
 
 ```bash
-OXYLABS_RESIDENTIAL_USERNAME=your_username
+OXYLABS_RESIDENTIAL_USERNAME=customer-your_username
 OXYLABS_RESIDENTIAL_PASSWORD=your_password
 ```
 
-Without proxy credentials, the API connects to YouTube directly (works fine for moderate usage).
+The backend automatically detects these environment variables and routes all YouTube API requests through the proxy. No code changes needed.
+
+### When You Need a Proxy
+
+| Scenario | Proxy Needed? |
+|----------|--------------|
+| Local development (few requests/day) | No |
+| Personal self-hosted instance | Usually no |
+| Deployed to cloud server | **Yes** -- cloud IPs are flagged |
+| High-volume extraction (50+ videos/day) | **Yes** -- rate limits kick in |
+| Getting intermittent `TranscriptsDisabled` errors | **Yes** -- your IP is being throttled |
+
+### Cost
+
+Residential proxies are billed per GB of traffic. Since transcript extraction transfers only text (no video/audio), bandwidth usage is minimal -- typically **under $1/month** for moderate usage (hundreds of transcripts).

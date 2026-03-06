@@ -20,7 +20,41 @@
 - **Dark Mode** -- Full dark/light theme support
 - **Self-Hosted** -- Run on your own infrastructure, your data stays private
 - **Docker Ready** -- One command to launch with Docker Compose
-- **Optional Proxy** -- Oxylabs residential proxy support for high-volume usage
+- **Optional Proxy** -- Oxylabs residential proxy support to bypass YouTube bot detection
+
+## Why a Proxy?
+
+YouTube aggressively blocks automated transcript requests. When you run this tool from a server or make many requests, YouTube will detect the non-browser traffic pattern and start returning errors like:
+
+- `TranscriptsDisabled` for videos that clearly have captions
+- HTTP 429 (Too Many Requests)
+- IP-based rate limiting and temporary bans
+
+**Why residential proxies specifically?** YouTube distinguishes between datacenter IPs (AWS, GCP, etc.) and residential IPs (real ISPs like Comcast, Vodafone). Datacenter proxies get blocked almost immediately. Residential proxies route your requests through real consumer IP addresses, making them indistinguishable from a person watching YouTube at home.
+
+**Oxylabs Residential Proxy** is what we use and recommend:
+
+1. Sign up at [oxylabs.io](https://oxylabs.io/products/residential-proxy-pool)
+2. Choose the **Residential Proxy** product (not datacenter or ISP)
+3. You'll get a username and password for proxy authentication
+4. Add them to your `.env` file:
+
+```bash
+OXYLABS_RESIDENTIAL_USERNAME=customer-your_username
+OXYLABS_RESIDENTIAL_PASSWORD=your_password
+```
+
+**Without a proxy**, the app connects directly to YouTube. This works fine for:
+- Local development and testing
+- Low-volume personal use (a few transcripts per day)
+- Networks where YouTube doesn't flag your IP
+
+**With a proxy**, you get:
+- Reliable extraction even at high volume
+- No IP bans or rate limiting
+- Consistent results from any hosting environment (AWS, Railway, Fly.io, etc.)
+
+> **Cost:** Oxylabs residential proxies are pay-per-GB. Transcript extraction uses very little bandwidth (text only), so costs are minimal -- typically under $1/month for moderate usage.
 
 ## Quick Start
 
@@ -96,8 +130,8 @@ make dev    # Start both servers
 | `BACKEND_URL` | `http://localhost:5000` | Backend API URL |
 | `FRONTEND_URL` | `http://localhost:3000` | Frontend URL (for CORS) |
 | `DATABASE_URL` | `file:./data/transcripts.db` | SQLite database path |
-| `OXYLABS_RESIDENTIAL_USERNAME` | -- | Optional: Oxylabs proxy username |
-| `OXYLABS_RESIDENTIAL_PASSWORD` | -- | Optional: Oxylabs proxy password |
+| `OXYLABS_RESIDENTIAL_USERNAME` | -- | Optional: Oxylabs residential proxy username ([sign up](https://oxylabs.io/products/residential-proxy-pool)) |
+| `OXYLABS_RESIDENTIAL_PASSWORD` | -- | Optional: Oxylabs residential proxy password |
 
 ## API Documentation
 

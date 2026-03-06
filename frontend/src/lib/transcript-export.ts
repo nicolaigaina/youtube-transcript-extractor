@@ -1,5 +1,3 @@
-import jsPDF from "jspdf";
-
 export interface TranscriptData {
   youtubeVideoId: string;
   youtubeTitle?: string | null;
@@ -53,7 +51,8 @@ export function exportTranscriptTXT(data: TranscriptData): void {
   downloadBlob(blob, getFilename(data, "txt"));
 }
 
-export function exportTranscriptPDF(data: TranscriptData): void {
+export async function exportTranscriptPDF(data: TranscriptData): Promise<void> {
+  const { default: jsPDF } = await import("jspdf");
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 15;

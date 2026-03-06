@@ -279,7 +279,16 @@ export function TranscriptViewer({ transcript }: TranscriptViewerProps) {
                   <span key={i}>{part.text}</span>
                 ),
               )
-            : transcript.transcriptText}
+            : transcript.hasTimestamps && transcript.segments && transcript.segments.length > 0
+              ? transcript.segments.map((segment, i) => (
+                  <p key={i} className="mb-2 last:mb-0">
+                    <span className="mr-2 inline-block font-mono text-xs text-muted-foreground">
+                      {formatTimestamp(segment.start, true)}
+                    </span>
+                    {segment.text}
+                  </p>
+                ))
+              : transcript.transcriptText}
         </div>
 
         {/* Sidebar */}

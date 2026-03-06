@@ -26,8 +26,10 @@ export async function fetchTranscript(
 
   const needsTimestampUpgrade =
     existing && includeTimestamps && !existing.hasTimestamps;
+  const needsMetadata =
+    existing && (!existing.youtubeTitle || !existing.youtubeChannel);
 
-  if (existing && !needsTimestampUpgrade) {
+  if (existing && !needsTimestampUpgrade && !needsMetadata) {
     return { transcriptId: existing.id, isExisting: true };
   }
 
@@ -88,12 +90,14 @@ export async function fetchTranscript(
 
     const formattedText = data.transcript.replace(/\s*>>\s*/g, "\n\n");
 
-    if (needsTimestampUpgrade && existing) {
+    if (existing && (needsTimestampUpgrade || needsMetadata)) {
       await db.transcript.update({
         where: { id: existing.id },
         data: {
-          ...(data.segments && { segments: JSON.stringify(data.segments) }),
-          hasTimestamps: !!data.segments?.length,
+          ...(needsMetadata && data.title && { youtubeTitle: data.title }),
+          ...(needsMetadata && data.channel && { youtubeChannel: data.channel }),
+          ...(needsTimestampUpgrade && data.segments && { segments: JSON.stringify(data.segments) }),
+          ...(needsTimestampUpgrade && { hasTimestamps: !!data.segments?.length }),
           ...(data.all_transcripts && {
             allLanguageTranscripts: JSON.stringify(data.all_transcripts),
           }),

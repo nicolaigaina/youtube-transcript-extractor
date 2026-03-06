@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Transcript {
+  id String @id @default(cuid())
+
+  youtubeUrl     String
+  youtubeVideoId String
+
+  youtubeTitle   String?
+  youtubeChannel String?
+
+  transcriptText         String
+  wordCount              Int
+  language               String?
+  availableLanguages     String?
+  allLanguageTranscripts String?
+
+  segments      String?
+  hasTimestamps Boolean @default(false)
+
+  status       String  @default("completed")
+  errorMessage String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([youtubeVideoId], name: "unique_video_transcript")
+  @@index([youtubeVideoId])
+  @@index([createdAt])
+}
